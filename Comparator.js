@@ -1,8 +1,8 @@
 class Comparator {
   constructor(compareFunction) {
-    this.compare = compareFunction || Comparator.defaultCompareFucntion;
+    this.compare = compareFunction || Comparator.defaultCompareFunction;
   }
-  static defaultCompareFucntion(f, l) {
+  static defaultCompareFunction(f, l) {
     if (f === l) return 0;
     return f > l ? 1 : -1;
   }
