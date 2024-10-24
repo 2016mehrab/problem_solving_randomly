@@ -1,5 +1,5 @@
-import Comparator from "./Comparator";
-export default class Heap {
+const Comparator = require("./Comparator");
+class Heap {
   constructor(compareFunction) {
     if (new.target === Heap) {
       throw new TypeError("Cannot create instane directly");
@@ -14,7 +14,7 @@ export default class Heap {
     return parentIndex * 2 + 2;
   }
   getParentIndex(childIndex) {
-    return (childIndex - 1) / 2;
+    return Math.floor((childIndex - 1) / 2);
   }
   hasParent(childIndex) {
     return this.getParentIndex(childIndex) >= 0;
@@ -28,8 +28,8 @@ export default class Heap {
 
   swap(j, k) {
     const tmp = this.container[j];
-    this.container[j] = this.container[i];
-    this.container[i] = tmp;
+    this.container[j] = this.container[k];
+    this.container[k] = tmp;
   }
   peek() {
     if (this.container.length === 0) return null;
@@ -48,9 +48,9 @@ export default class Heap {
   swim() {
     let current = this.container.length - 1;
     while (
-      this.parentIndex(current) &&
-      this.pairIsInCorrectOrder(
-        this.container[this.getParentIndex[current]],
+      this.hasParent(current) &&
+      !this.pairIsInCorrectOrder(
+        this.parent(current),
         this.container[current]
       )
     ) {
@@ -101,7 +101,14 @@ export default class Heap {
     return tmp;
   }
 
+  add(item) {
+    this.container.push(item);
+    this.swim();
+    return this;
+  }
   pairIsInCorrectOrder(f, l) {
     throw new Error("You have to override heap pair comparison method");
   }
 }
+
+module.exports = Heap;
