@@ -3,9 +3,9 @@ def gen(stringList, length):
         print(''.join(stringList))
         return
 
-    for i in [1,2,3]:
+    for i in stringList:
         stringList.append(str(i)+'')
         gen(stringList,length-1)
         stringList.pop()
     
-gen([],3)
+gen(['a','b','c'],3)
