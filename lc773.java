@@ -25,7 +25,7 @@ class LC773 {
     public int slidingPuzzle(int[][] board) {
         int ROWS = board.length;
         int COLS = board[0].length;
-        String initial = "";
+        StringBuilder sb = new StringBuilder();
         String expected = "123450";
         Queue<String> queue = new LinkedList<>();
         Map<Integer, ArrayList<Integer>> moves = new HashMap<>();
@@ -34,10 +34,10 @@ class LC773 {
 
         for (int r = 0; r < ROWS; ++r) {
             for (int c = 0; c < COLS; ++c) {
-                initial += board[r][c];
+                sb.append(board[r][c]);
             }
         }
-        queue.add(initial);
+        queue.add(new String(sb));
         moves.put(0, new ArrayList<>(Arrays.asList(1, 3)));
         moves.put(1, new ArrayList<>(Arrays.asList(0, 2, 4)));
         moves.put(2, new ArrayList<>(Arrays.asList(1, 5)));
