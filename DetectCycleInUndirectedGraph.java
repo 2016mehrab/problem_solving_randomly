@@ -1,6 +1,28 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Queue;
 
 class DetectCycleInUndirectedGraph {
+        private boolean hasCycleBFS(int node, ArrayList<Integer>[] adj, boolean[] visited) {
+                Queue<ArrayList<Integer>> q = new ArrayDeque<>();
+                q.add(new ArrayList<Integer>(Arrays.asList(node, -1)));
+                visited[node] = true;
+                while (!q.isEmpty()) {
+                        ArrayList<Integer> currPair = q.poll();
+                        for (int neighbor : adj[currPair.get(0)]) {
+                                if (neighbor == currPair.get(1))
+                                        continue;
+                                if (visited[neighbor]) {
+                                        return true;
+                                }
+                                visited[neighbor] = true;
+                                q.add(new ArrayList<Integer>(Arrays.asList(neighbor, currPair.get(0))));
+                        }
+
+                }
+                return false;
+        }
 
         private boolean hasCycleDFS(int current, int parent, ArrayList<Integer>[] adj, boolean[] visited) {
                 visited[current] = true;
@@ -21,7 +43,10 @@ class DetectCycleInUndirectedGraph {
 
                 boolean[] visited = new boolean[vertices];
                 for (int i = 0; i < vertices; ++i) {
-                        if (!visited[i] && hasCycleDFS(i, -1, adj, visited)) {
+                        // if (!visited[i] && hasCycleDFS(i, -1, adj, visited)) {
+                        //         return true;
+                        // }
+                        if (!visited[i] && hasCycleBFS(i,  adj, visited)) {
                                 return true;
                         }
                 }
