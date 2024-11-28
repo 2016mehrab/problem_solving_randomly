@@ -25,10 +25,10 @@ class LC547 {
         visited[node] = true;
         while (!q.isEmpty()) {
             int curr = q.poll();
-            for (int neighbor : adj[curr]) {
-                if (neighbor == 1) {
-                    if (visited[neighbor])
-                        continue;
+            for (int neighbor = 0; neighbor < adj[curr].length; ++neighbor) {
+                if (visited[neighbor])
+                    continue;
+                if (adj[curr][neighbor] == 1) {
                     q.add(neighbor);
                     visited[neighbor] = true;
                 }
@@ -50,12 +50,17 @@ class LC547 {
 
     public int findCircleNum(int[][] isConnected) {
         int ROWS = isConnected.length;
-        int COLS = isConnected[0].length;
         boolean[] visited = new boolean[ROWS];
         int provinces = 0;
         for (int city = 0; city < ROWS; ++city) {
+        if (!visited[city]) {
+        markConnectionDFS(city, isConnected, visited);
+        ++provinces;
+        }
+        }
+        for (int city = 0; city < ROWS; ++city) {
             if (!visited[city]) {
-                markConnectionDFS(city, isConnected, visited);
+                markConnectionBFS(city, isConnected, visited);
                 ++provinces;
             }
         }
